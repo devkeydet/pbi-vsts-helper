@@ -31,12 +31,21 @@ namespace pbi_pub
                 group = query.FirstOrDefault();
                 if (group == null)
                 {
-                    group = client.Groups.CreateGroup(new GroupCreationRequest { Name = groupName });
+                    group = client.Groups.CreateGroupAsync(new GroupCreationRequest { Name = groupName }).Result;
                 }
 
                 var fileName = Path.GetFileName(path);
-                var fileStream = File.OpenRead(path);
-                var result = client.Imports.PostImportFileWithHttpMessage(group.Id, fileStream, fileName, "Overwrite").Result;
+                FileStream fileStream = File.OpenRead(path);
+                HttpOperationResponse<Import> response;
+                try
+                {
+                    response = client.Imports.PostImportFileWithHttpMessage(group.Id, fileStream, fileName, "Overwrite").Result;
+                }
+                catch (System.Exception)
+                {
+                    fileStream = File.OpenRead(path);
+                    response = client.Imports.PostImportFileWithHttpMessage(group.Id, fileStream, fileName).Result;
+                }
             }
         }
     }
