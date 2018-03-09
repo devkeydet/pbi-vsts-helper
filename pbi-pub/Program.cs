@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading;
 
 namespace pbi_pub
 {
@@ -83,6 +84,7 @@ namespace pbi_pub
 
                 // Update the data sources so that they point to the right Dynamics instance.
                 var content = new StringContent(dataSourceUpdates, Encoding.UTF8, "application/json");
+                Thread.Sleep(TimeSpan.FromSeconds(5)); //REST API seems to fail sporadically when updating a datasource immediately after import.  Waiting 5 seconds seems to fix it.
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
