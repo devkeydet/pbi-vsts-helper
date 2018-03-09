@@ -22,24 +22,25 @@ namespace pbi_pub
             var username = args[5];
             var password = args[6];
             var dataSourceUpdates = args[7]; // Example JSON below
-                                             //var dataSourceUpdates =
-                                             //    @"{
-                                             //      ""updateDetails"":[
-                                             //        {
-                                             //          ""connectionDetails"":
-                                             //          {
-                                             //            ""url"": ""https://marcsc-corrmgmt.api.crm.dynamics.com/api/data/v8.2""
-                                             //          },
-                                             //          ""datasourceSelector"":
-                                             //          {
-                                             //            ""datasourceType"": ""OData"",
-                                             //                ""connectionDetails"": {
-                                             //                    ""url"": ""https://cmv9.api.crm.dynamics.com/api/data/v8.2""
-                                             //                }
-                                             //          }
-                                             //        }
-                                             //      ]
-                                             //    }";
+            //var dataSourceUpdates =
+            //@"{
+            //""updateDetails"":[
+            //    {
+            //    ""connectionDetails"":
+            //    {
+            //        ""url"": ""https://marcsc-corrmgmt.api.crm.dynamics.com/api/data/v8.2""
+            //    },
+            //    ""datasourceSelector"":
+            //    {
+            //        ""datasourceType"": ""OData"",
+            //            ""connectionDetails"": {
+            //                ""url"": ""https://cmv9.api.crm.dynamics.com/api/data/v8.2""
+            //            }
+            //    }
+            //    }
+            //]
+            //}";
+            //@"{""updateDetails"":[{""connectionDetails"":{""url"": ""https://marcsc-corrmgmt.api.crm.dynamics.com/api/data/v8.2""},""datasourceSelector"":{""datasourceType"": ""OData"",""connectionDetails"": {""url"": ""https://cmv9.api.crm.dynamics.com/api/data/v8.2""}}}]}";
 
             var token = AuthenticationHelper.GetAccessToken(clientId, clientSecret, username, password);
 
@@ -91,7 +92,7 @@ namespace pbi_pub
                         content).Result;
                     if (!result.IsSuccessStatusCode)
                     {
-                        throw new Exception("failed to update the datasource");
+                        Console.Error.WriteLine("ERROR: Failed to update the datasource");
                     }
                 }
 
